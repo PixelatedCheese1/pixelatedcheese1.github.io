@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spacebar Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .counter {
+            font-size: 2em;
+            margin: 20px;
+        }
+        .start-btn {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        .spacebar-key {
+            display: inline-block;
+            width: 200px;
+            height: 60px;
+            background-color: gray;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 60px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            transition: transform 0.1s;
+        }
+        .pressed {
+            transform: translateY(5px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Spacebar Clicker Game</h1>
+    <p>Press the spacebar as many times as you can!</p>
+    <button class="start-btn" onclick="resetGame()">Reset Counter</button>
+    <p class="counter" id="counter">Score: 0</p>
+    <div class="spacebar-key" id="spacebar">Space</div>
+    
+    <audio id="pressSound" src="https://www.myinstants.com/media/sounds/button-click.mp3"></audio>
+    
+    <script>
+        let score = 0;
+        const pressSound = document.getElementById("pressSound");
+
+        function resetGame() {
+            score = 0;
+            document.getElementById("counter").textContent = "Score: " + score;
+        }
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                score++;
+                document.getElementById("counter").textContent = "Score: " + score;
+                document.getElementById("spacebar").classList.add("pressed");
+                pressSound.currentTime = 0;
+                pressSound.play();
+            }
+        });
+
+        document.addEventListener("keyup", (event) => {
+            if (event.code === "Space") {
+                document.getElementById("spacebar").classList.remove("pressed");
+            }
+        });
+    </script>
+</body>
+</html>
