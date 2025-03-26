@@ -21,6 +21,7 @@
             align-items: center;
             height: 100vh;
             background: url('background.jpg') repeat;
+            transition: background 0.3s ease;
         }
 
         .hidden {
@@ -51,11 +52,12 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
-            transition: 0.3s;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .entry-button:hover {
             background: #ffaa00;
+            transform: scale(1.1);
         }
 
         .profile-container {
@@ -66,6 +68,7 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
+            transition: transform 0.3s ease;
         }
 
         .profile-picture {
@@ -74,18 +77,34 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
         }
 
         .name {
             font-size: 24px;
             font-weight: bold;
             margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .name:hover {
+            color: #ffcc00;
         }
 
         .description {
             font-size: 16px;
             color: #666;
             margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .description:hover {
+            color: #333;
         }
 
         .social-links {
@@ -107,11 +126,54 @@
             justify-content: center;
             align-items: center;
             font-size: 18px;
-            transition: 0.3s;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .social-links a:hover {
             background: #555;
+            transform: scale(1.1);
+        }
+
+        /* Mute Button Styles */
+        .mute-button {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 18px;
+        }
+
+        .mute-button:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* Reddit Karma Counter */
+        .karma-container {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Hidden Input for Easter Egg */
+        .rainbow-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
         }
     </style>
 </head>
@@ -129,10 +191,15 @@
         <div class="name">PixelatedCheese1</div>
         <div class="description">A short description about yourself.</div>
         <div class="social-links">
-            <a href="#" target="_blank"><i class="fab fa-reddit-alien"></i></a>
+            <a href="https://www.reddit.com/user/No-Wallaby-4167/" target="_blank"><i class="fab fa-reddit-alien"></i></a>
             <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
             <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <!-- Karma Counter -->
+        <div class="karma-container">
+            Karma: <span id="redditKarma">Loading...</span>
         </div>
     </div>
 
@@ -142,15 +209,77 @@
         Your browser does not support the audio element.
     </audio>
 
+    <!-- Mute Button -->
+    <button class="mute-button hidden" id="muteButton" onclick="toggleMute()">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+    <!-- Easter Egg Input (Hidden) -->
+    <input type="text" class="rainbow-input" id="rainbowInput" placeholder="Type 'Rainbow' here" oninput="checkRainbow()">
+
     <script>
         function enterSite() {
             document.getElementById("entryScreen").style.display = "none";
             document.getElementById("profilePage").classList.remove("hidden");
+            document.getElementById("muteButton").classList.remove("hidden");
 
             // Play music when the site is entered
             const music = document.getElementById("backgroundMusic");
             music.play().catch(error => console.log("Autoplay blocked:", error));
+
+            // Fetch Reddit karma
+            fetchRedditKarma();
         }
+
+        function toggleMute() {
+            const music = document.getElementById("backgroundMusic");
+            const muteButton = document.getElementById("muteButton");
+            const icon = muteButton.querySelector("i");
+
+            if (music.muted) {
+                music.muted = false;
+                icon.classList.replace("fa-volume-mute", "fa-volume-up");
+            } else {
+                music.muted = true;
+                icon.classList.replace("fa-volume-up", "fa-volume-mute");
+            }
+        }
+
+        // Fetch Reddit karma for No-Wallaby-4167
+        async function fetchRedditKarma() {
+            const username = 'No-Wallaby-4167'; // Username updated here
+            const url = `https://www.reddit.com/user/${username}/about.json`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const karma = data.data.link_karma + data.data.comment_karma;
+                document.getElementById("redditKarma").textContent = karma;
+            } catch (error) {
+                document.getElementById("redditKarma").textContent = "Error loading karma";
+                console.error("Error fetching karma:", error);
+            }
+        }
+
+        // Easter Egg - Rainbow effect
+        function checkRainbow() {
+            const input = document.getElementById("rainbowInput").value.toLowerCase();
+            if (input === "rainbow") {
+                document.body.style.background = "linear-gradient(45deg, #ff0000, #ff9900, #33cc33, #0066ff, #9900cc, #ff0066, #ffcc00)";
+                document.body.style.backgroundSize = "400% 400%";
+                document.body.style.animation = "rainbow 10s ease infinite";
+                document.querySelector(".entry-screen").style.display = "none"; // Hide the entry screen
+            }
+        }
+
+        // Add rainbow animation
+        document.styleSheets[0].insertRule(`
+            @keyframes rainbow {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+        `);
     </script>
 
 </body>
