@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +17,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background: url('background.jpg') repeat;
         }
 
         .profile-container {
@@ -50,17 +54,21 @@
             margin-top: 15px;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .social-links a {
             text-decoration: none;
             color: white;
             background: #333;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 50%;
             width: 40px;
-            text-align: center;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
             transition: 0.3s;
         }
 
@@ -75,10 +83,10 @@
         <div class="name">PixelatedCheese1</div>
         <div class="description">A short description about yourself.</div>
         <div class="social-links">
-            <a href="#" target="_blank">FB</a>
-            <a href="#" target="_blank">X</a>
-            <a href="#" target="_blank">IG</a>
-            <a href="#" target="_blank">LI</a>
+            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
     </div>
 </body>
