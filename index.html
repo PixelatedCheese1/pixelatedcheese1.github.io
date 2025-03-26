@@ -120,24 +120,8 @@
             transform: scale(1.1);
         }
 
-        /* Quote Styles */
-        .quote-container {
-            margin-top: 20px;
-            font-size: 18px;
-            font-style: italic;
-            color: #333;
-            text-align: center;
-            max-width: 500px;
-            margin: 20px auto;
-            transition: color 0.3s ease;
-        }
-
-        .quote-container p {
-            margin: 0;
-        }
-
-        /* Karma Progress Bar Styles */
-        .karma-container {
+        /* YouTube Subscriber Progress Bar Styles */
+        .subscribers-container {
             width: 100%;
             background: #ddd;
             border-radius: 10px;
@@ -145,7 +129,7 @@
             height: 30px;
         }
 
-        .karma-bar {
+        .subscribers-bar {
             height: 100%;
             background: #4caf50;
             width: 0%;
@@ -202,16 +186,10 @@
             <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
 
-        <!-- Karma Progress Bar -->
-        <div class="karma-container">
-            <div class="karma-bar" id="karmaBar">0/200 Karma</div>
+        <!-- YouTube Subscriber Progress Bar -->
+        <div class="subscribers-container">
+            <div class="subscribers-bar" id="subscribersBar">0 / 1000 Subscribers</div>
         </div>
-    </div>
-
-    <!-- Quote of the Day -->
-    <div class="quote-container" id="quoteContainer">
-        <p id="quoteText">Loading quote...</p>
-        <p id="quoteAuthor">- Author</p>
     </div>
 
     <!-- Background Music -->
@@ -236,36 +214,8 @@
             const music = document.getElementById("backgroundMusic");
             music.play().catch(error => console.log("Autoplay blocked:", error));
 
-            // Fetch random quote of the day
-            fetchRandomQuote();
-
-            // Set karma progress
-            setKarmaProgress(150);  // Set karma to a specific value, for example 150
-        }
-
-        // Fetch Random Quote from Quotable API
-        async function fetchRandomQuote() {
-            try {
-                const response = await fetch("https://api.quotable.io/random");
-                const data = await response.json();
-                document.getElementById("quoteText").textContent = `"${data.content}"`;
-                document.getElementById("quoteAuthor").textContent = `- ${data.author}`;
-            } catch (error) {
-                document.getElementById("quoteText").textContent = "Failed to load quote.";
-                document.getElementById("quoteAuthor").textContent = "- Unknown";
-                console.error("Error fetching quote:", error);
-            }
-        }
-
-        // Set Karma Progress
-        function setKarmaProgress(karma) {
-            const progressBar = document.getElementById("karmaBar");
-            const maxKarma = 200;
-            const karmaPercentage = (karma / maxKarma) * 100;
-
-            // Set the progress bar width and text
-            progressBar.style.width = `${karmaPercentage}%`;
-            progressBar.textContent = `${karma} / ${maxKarma} Karma`;
+            // Fetch YouTube subscriber count
+            fetchYouTubeSubscribers();
         }
 
         // Mute Button Functionality
@@ -281,6 +231,27 @@
                 music.muted = true;
                 icon.classList.replace("fa-volume-up", "fa-volume-mute");
             }
+        }
+
+        // Fetch YouTube Subscriber Count from YouTube API
+        function fetchYouTubeSubscribers() {
+            const channelId = 'UCIE6u_r7jqI1LVIZ42dge1Q'; // Your Channel ID
+            const apiKey = 'AIzaSyDjZSen2b6_PuGFtfzzFaopp_65aT46QNM'; // Your API Key
+
+            fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const currentSubscribers = parseInt(data.items[0].statistics.subscriberCount);
+                    const progressPercentage = (currentSubscribers / 1000) * 100;
+
+                    // Update the YouTube subscriber progress bar width and text
+                    const progressBar = document.getElementById("subscribersBar");
+                    progressBar.style.width = `${progressPercentage}%`;
+                    progressBar.textContent = `${currentSubscribers} / 1000 Subscribers`;
+                })
+                .catch(error => {
+                    console.error("Error fetching subscriber count:", error);
+                });
         }
     </script>
 
