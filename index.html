@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
 
+        .profile-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #333;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .description {
+            font-size: 16px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: white;
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            width: 40px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <img src="profile.jpg" alt="Profile Picture" class="profile-picture">
+        <div class="name">Your Name</div>
+        <div class="description">A short description about yourself.</div>
+        <div class="social-links">
+            <a href="#" target="_blank">FB</a>
+            <a href="#" target="_blank">X</a>
+            <a href="#" target="_blank">IG</a>
+            <a href="#" target="_blank">LI</a>
+        </div>
+    </div>
+</body>
+</html>
