@@ -131,7 +131,7 @@
 
         .subscribers-bar {
             height: 100%;
-            background: #4caf50;
+            background: #f44336; /* Red color */
             width: 0%;
             border-radius: 10px;
             text-align: center;
@@ -139,6 +139,12 @@
             font-weight: bold;
             line-height: 30px;
             transition: width 0.5s ease;
+        }
+
+        .subscribers-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         /* Mute Button Styles */
@@ -181,12 +187,11 @@
         <div class="description">A short description about yourself.</div>
         <div class="social-links">
             <a href="https://www.reddit.com/user/No-Wallaby-4167/" target="_blank"><i class="fab fa-reddit-alien"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/@PixelatedCheese1" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
 
         <!-- YouTube Subscriber Progress Bar -->
+        <div class="subscribers-label">Subscribers</div>
         <div class="subscribers-container">
             <div class="subscribers-bar" id="subscribersBar">0 / 1000 Subscribers</div>
         </div>
