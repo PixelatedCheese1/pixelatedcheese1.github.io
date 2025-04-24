@@ -36,12 +36,12 @@ function fetchYouTubeSubscribers() {
         .then(response => response.json())
         .then(data => {
             const currentSubscribers = parseInt(data.items[0].statistics.subscriberCount);
-            const progressPercentage = (currentSubscribers / 1000) * 100;
+            const progressPercentage = (currentSubscribers / 5000) * 100;
 
             // Update the YouTube subscriber progress bar width and text
             const progressBar = document.getElementById("subscribersBar");
             progressBar.style.width = `${progressPercentage}%`;
-            progressBar.textContent = `${currentSubscribers} / 1000 Subscribers`;
+            progressBar.textContent = `${currentSubscribers} / 5000 Subscribers`;
         })
         .catch(error => {
             console.error("Error fetching subscriber count:", error);
